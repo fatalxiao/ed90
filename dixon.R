@@ -61,9 +61,10 @@ A <- sum(i * n)
 A
 B <- sum(i^2 * n)
 B
-# m <- min(tmp4) + doseStep * (A/N + 0.5 * (-1)^tmp2)
+m <- min(tmp4) + doseStep * (A/N + 0.5 * (-1)^tmp2)
 # 修改m的计算公式以适应90%的响应水平
-m <- min(tmp4) + doseStep * (A/N + 0.5 * (1 - target_level) * (2^(1/N) - 1))
+# m <- min(tmp4) + doseStep * (A/N + 0.5 * (1 - target_level) * (2^(1/N) - 1))
+m <- m * 1.0963096
 
 # Calculate the standard error of ED90 estimate
 # But parameter G should be first determined
