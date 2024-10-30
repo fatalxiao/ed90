@@ -4,7 +4,7 @@ if (!require("drc")) {
 }
 library(drc)
 
-groupS <- read.csv("./groupS.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./PIEB.csv", 1, encoding='UTF-8')
 groupS
 
 doses <- groupS$doseSequence
@@ -24,6 +24,7 @@ summary(model)
 
 # 使用ED()函数计算ED50
 # 第一个参数是模型，第二个参数是你想要计算的药效比例（在这里是50）
-ed50 <- ED(model, 50, interval = "delta")
+ed90 <- ED(model, 90, interval = "delta")
+ed90
 
 
