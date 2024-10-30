@@ -1,0 +1,231 @@
+
+# Information about versions 0.0-0 (?) 0.0-1, ..., 0.0-3,
+# is lost in the mists of time.
+#
+# Information about the changes 0.0-4 |--> 0.0-5 |--> 0.0-6
+# will be added ``when I get around to it''. :-)
+
+Version 0.0-6 |--> 0.0-7:
+
+# 24/August/2009
+
+(1) Added namespace; changed name of .First.lib()
+    in First.R to .onLoad().  (As one must when adding
+    a namespace, apparently.)
+
+    Thanks to Tobias Verbeke for instigating this change
+    and for showing me how to do it.
+
+(2) Removed announcement of old changes from .First.lib();
+    put in announcement of addition of namespace.
+
+Version 0.0-7 |--> 0.0-8:
+
+# 23/October/2009
+
+(1) Added bivariate isotonic capabilities, using Applied
+    Statistics Algorithm AS 206, at the request of
+    Paramjit Gill.
+
+(2) Corrected the spelling of ``NAMESPACE'' (!!!) in a
+    message produced by the .onLoad() function.
+
+Version 0.0-8: |--> 0.0-9:
+
+# 5/September/2011
+
+(1) Changed some titles in the help files to avoid cock-ups
+    in the INDEX file (since R CMD INSTALL now seems to truncate
+    titles that are over 72 characters long.
+
+Version 0.0.9 |--> 0.0-10
+
+# 04/November/2011
+
+(1) Got rid of the INDEX file completely!  Seems not to be needed,
+    and just causes trouble.
+
+(2) Got rid of the "now has a NAMESPACE" message in First.R, since
+    *everything* now has a namespace!
+
+Version 0.0-10 |--> 0.0-11
+
+# 11/January/2013
+
+(1) Fixed a bug in the Fortran code for the "smooth" algorithm
+    underlying the biviso() function.  In this code some dimensions
+    were hard-wired at 20. This caused the function to throw an error
+    if the matrix of values being isotonized was bigger than 20 x 20.
+    I revised the code so that the dimensions are now dynamic.
+
+    Thanks go to Jing Qin by whom this bug was drawn to my attention.
+
+(2) While doing some checking I noticed that the function was
+    returning results that weren't *quite* isotonic.  Made
+    adjustments to value of "eps" and made "EPS" an argument of
+    the "PAV" subroutine.  This appeared to reduce the problem
+    substantially but did not quite eliminate it completely.
+
+(3) It also made the algorithm sometimes fail to converge, so
+    I incremented the default value of "ncycle" from 1000 to
+    10000, which seems to fix the problem.
+
+Version 0.0-11 |--> 0.0-12
+
+# 12/January/2013
+
+(1) Changed the file First.R to contain two functions:
+    .onLoad() to load the Fortran code, and
+    .onAttach() to produce the startup message.
+
+Version 0.0-12 |--> 0.0-13
+
+# 16/January/2013
+
+(1) Changed biviso() to use two "epsilon" arguments, namely "eps"
+    and "eps2" and changed the code of "smooth.f" to make use of
+    these.  The "eps" argument is used for determining convergence.
+    The "eps2" argument gets passed to the PAV() subroutine and is
+    used for determined whether there are adjacent violators.
+
+Version 0.0-13 |--> 0.0-14
+
+# 31/March/2013
+
+(1) Fixed a typo in biviso.R and one in biviso.Rd.
+
+# 1/April/2013
+
+(2) Added arguments "fatal" and "warn" to biviso(); the first (if
+    set to FALSE) permits the return of "intermediate" values where
+    convergence has not yet been achieved.  (This addition prompted
+    by a request from Revathi Ananthakrishnan.)
+
+(3) Added a check in biviso() that ncycle is at least 2.
+
+(4) Modified the first example for biviso() to introduce some random
+    non-isotonicity.
+
+(5) Added an example illustrating the use of fatal=FALSE
+    in biviso().
+
+Version 0.0-14 |--> 0.0-15
+
+# 18/April/2013
+
+(1) Fixed up the Fortran dimension statements, getting
+rid of dummy 1's as the last dimensions (which now throws
+a warning from the compiler).
+
+Version 0.0-15 |--> 0.0-16
+
+# 31/May/2015
+
+(1) Corrected the comment at the beginning of ufit.r.
+
+(2) Changed unimode to deal with the linear ordering cases
+immediately without further fooling about.
+
+(3) Consequently removed checks on k1 == 0 and k2 == 0
+(if either of these happens something is toadally screwed up;
+goof is set to .true. and the function returns).
+
+Uploaded to CRAN 31/05/2015
+
+Version 0.0-16 |--> 0.0-17
+
+# 31/May/2015
+
+(1) Added unimode.sa() (standalone function for fitting a
+unimodal isotonic regression) to the package.  It is an
+"internal" undocumented function.
+
+(2) Fixed the munged-up date field in DESCRIPTION.
+
+# 01/June/2015
+
+(1) Fixed glitches in unimode.sa().
+
+(2) Fixed glitch in ufit.r.
+
+Uploaded to CRAN 01/06/2015
+
+Version 0.0-17 |--> 0.0-18
+
+(1) Wrote vignette explaining the algorithm used.
+
+(2) Added exemplary data set "vigour", the data on vigour
+of growth in stands of spruce trees in New Brunswick, Canada.
+
+Uploaded to CRAN 05/06/2019 (???).
+
+# 26/May/2020
+Fixed glitch in src/init.c --- the declaration for ufit incorrectly
+indicate that "mse" was integer, whereas in fact mse was declared
+*double precision* in ufit.r.
+
+This error was fixed on CRAN by the CRAN maintainers, and was
+kindly explained to me by Brian Ripley.
+
+The version now on CRAN appears to retain the "old" version
+number, i.e. 0.0-18.
+
+Version 0.0-18 |--> 0.0-19
+
+# 23/July/2023
+Fixed a serious infelicity that was kindly pointed out to me by
+Zhiwei Zhang.  The code suffered from an unfortunate conflation
+of the mode location and the index, amongst the x-values, of that
+location.  It was still possible to get correct answers but one
+had to be very careful.
+
+The function ufit() now has two arguments, for specifying the location
+of the mode:  "lmode", the actual location, and "imode" the index among
+the x-values of the location.  It is an error to specify both of these
+arguments.  If *neither* is specified, then the function performs an
+exhaustive search among all possible mode locations for the optimal
+(in terms of minising the error sum of squares) location.
+
+An error is thrown if lmode is specified and it is not one of
+the x-values.  Likewise an error is thrown if imode is specified
+and it is not among the indices from 1 to n (where n is the length of y).
+Note that if x is not specified it defaults to an equi-spaced sequence
+of length n on [0,1].
+
+# 01/October/2023.
+Finally got around to submitting the package to CRAN.  (CRAN was
+inactive back when the actual adjustments were made, so I didn't
+submit it at the time, and then it slipped off the radar
+
+Fixed some kludges in the Fortran subroutine smooth.f (code from
+Applied Statistics Algorithm AS 206) that now trigger warnings.
+(Problem with nested do loops terminating at the same label.)
+Had to change a "GO TO" from "GO TO 5" to "GO TO 6" (where 6 is the
+new label for the inner loop) on line 53.  Took forever to track
+down what was going wrong!!!
+
+Package built and checked; submitted to CRAN.
+
+Version 0.0-19 |--> 0.0-20
+
+At CRAN's behest, "compacted" the vignette file algorithm.pdf,
+using (from within the vignettes directory):
+
+    tools::compactPDF("./algorithm.pdf",gs_quality="ebook")
+
+The response said that the size was reduced from 107Kb to 88Kb
+(although ls -l gave the size of algorithm.pdf to be about 109 Kb
+before, and about 89.9 Kb after.
+
+Whereas the CRAN message said that the reduction was/would be from
+349 Kb to 99 Kb.
+
+Nothing makes any sense.
+
+Version 0.0-20 |--> 0.0-21
+
+On Ivan Krylov's advice did the build using
+
+   R CMD build --compact-vignettes=both
+
+Fingers crossed.

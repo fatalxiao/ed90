@@ -7,18 +7,18 @@ library(ed50)
 groupS <- read.csv("./PIEB.csv", 1, encoding='UTF-8')
 groupS
 
-doseSequence <- groupS$doseSequence
-doseResponse <- groupS$responseSequence
+dose <- groupS$doseSequence
+response <- groupS$responseSequence
 confidence <- .95
 tpCiScale <- 2.4/qnorm(0.975)
 boot.n <- 2000
 
-doseLength <- length(doseSequence)
+doseLength <- length(dose)
 doseLength
-responseLength <- length(doseResponse)
+responseLength <- length(response)
 responseLength
 
-# doseDiff <- round(diff(doseSequence), 10)
+# doseDiff <- round(diff(dose), 10)
 # doseDiff
 # doseStep <- unique(abs(doseDiff))
 # doseStep
@@ -28,11 +28,11 @@ doseStep <- 1
 target_level <- 0.9
 
 # Get the class of the target dose, failure one or success
-tmp1 <- table(doseResponse)
+tmp1 <- table(response)
 tmp2 <- as.numeric(names(tmp1)[which.min(tmp1)])
 
 # Get the specific target dose data
-doseTarget <- doseSequence[doseResponse == tmp2]
+doseTarget <- dose[response == tmp2]
 
 # Get the sample size of all levels of target doses and rank
 tmp3 <- table(doseTarget)
@@ -113,7 +113,7 @@ ed50_result <- list('Method of Estimation'= 'Dixon-Mood',
 ed50_result
 
 # 使用estimate函数计算ED50
-# ed50_result <- estimate(doseSequence = dose, doseResponse = response, method = "Dixon-Mood")
+# ed50_result <- estimate(dose = dose, response = response, method = "Dixon-Mood")
 
 # 获取ED50的估计值和标准误差
 ed50_estimate <- ed50_result$'Estimate of ED50'
