@@ -6,6 +6,8 @@ library(Iso)
 # Increasing order:
 y <- (1:20) + rnorm(20)
 ystar <- pava(y)
+ystar
+
 plot(y)
 lines(ystar,type='s')
 # Decreasing order:
