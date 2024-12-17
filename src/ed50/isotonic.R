@@ -1,20 +1,20 @@
 # 安装和加载所需的包
 if (!require("ed50")) {
-  install.packages("ed50")
+    install.packages("ed50")
 }
 library(ed50)
 if (!require("boot")) {
-  install.packages("boot")
+    install.packages("boot")
 }
 library(boot)
 
-groupS <- read.csv("./groupS.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./groupS.csv", 1, encoding = 'UTF-8')
 groupS
 
 doseSequence <- groupS$doseSequence
 doseResponse <- groupS$responseSequence
 confidence <- .95
-tpCiScale <- 2.4/qnorm(0.975)
+tpCiScale <- 2.4 / qnorm(0.975)
 boot.n <- 2000
 
 # Create a data frame

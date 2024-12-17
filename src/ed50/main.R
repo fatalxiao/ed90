@@ -23,34 +23,34 @@ groupS <- read.csv("./loading volume data.csv", 1, encoding='UTF-8')
 pavaData <- preparePava(groupS)
 pavaData
 
-# confidence <- .95
-#
-# # This the boot function
-# bootResult <- boot(data = groupS,
-#               statistic = bootIsotonicRegression,
-#                       R = 2000,
-#                     sim = "parametric",
-#                 ran.gen = bootIsotonicResample,
-#                     mle = list(baselinePava = pavaData,
-#                                   firstDose = 7,
-#                           PROBABILITY.GAMMA = 0.5),
-#            baselinePava = pavaData,
-#       PROBABILITY.GAMMA = 0.5)
-# bootResult
-#
-# # Get the prediction result of the confidence interval
-# prediction <- bootBC.ci(tObserved = bootResult$t0[3],
-#                             tBoot = bootResult$t[, 3],
-#                              conf = confidence)
-# prediction
-#
-# # Clean the prediction result
-# predictionLength <- length(prediction)
-# ans <- list('Method of Estimation' = 'Isotonic',
-#             'Estimate of ED50' = prediction$`Mean of Boot Replications`,
-#             'Standard Error of Estimate' = prediction$`Standard Error of Boot Statistic`,
-#             'Confidence Level' = paste0(100 * confidence, '%'),
-#             'Lower Bound' = prediction[[predictionLength - 2]],
-#             'Upper Bound' = prediction[[predictionLength - 1]])
-# ans
+confidence <- .95
+
+# This the boot function
+bootResult <- boot(data = groupS,
+              statistic = bootIsotonicRegression,
+                      R = 2000,
+                    sim = "parametric",
+                ran.gen = bootIsotonicResample,
+                    mle = list(baselinePava = pavaData,
+                                  firstDose = 7,
+                          PROBABILITY.GAMMA = 0.5),
+           baselinePava = pavaData,
+      PROBABILITY.GAMMA = 0.5)
+bootResult
+
+# Get the prediction result of the confidence interval
+prediction <- bootBC.ci(tObserved = bootResult$t0[3],
+                            tBoot = bootResult$t[, 3],
+                             conf = confidence)
+prediction
+
+# Clean the prediction result
+predictionLength <- length(prediction)
+ans <- list('Method of Estimation' = 'Isotonic',
+            'Estimate of ED50' = prediction$`Mean of Boot Replications`,
+            'Standard Error of Estimate' = prediction$`Standard Error of Boot Statistic`,
+            'Confidence Level' = paste0(100 * confidence, '%'),
+            'Lower Bound' = prediction[[predictionLength - 2]],
+            'Upper Bound' = prediction[[predictionLength - 1]])
+ans
 

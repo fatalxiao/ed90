@@ -1,5 +1,5 @@
 # 创建数据框示例
-groupS <- read.csv("./groupS.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./groupS.csv", 1, encoding = 'UTF-8')
 groupS
 
 doses <- groupS$doseSequence
@@ -12,10 +12,10 @@ logistic_model <- glm(responses ~ doses, data = data, family = binomial)
 
 # 定义预测函数
 ed90_predict_logistic <- function(model, p = 0.9) {
-  q <- qlogis(p)
-  b <- coef(model)
-  ed90 <- (q - b[1]) / b[2]
-  return(ed90)
+    q <- qlogis(p)
+    b <- coef(model)
+    ed90 <- (q - b[1]) / b[2]
+    return(ed90)
 }
 
 # 计算ED90

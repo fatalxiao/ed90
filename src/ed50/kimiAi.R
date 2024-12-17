@@ -1,16 +1,16 @@
 # 安装和加载所需的包
 if (!require("ed50")) {
-  install.packages("ed50")
+    install.packages("ed50")
 }
 library(ed50)
 
-groupS <- read.csv("./PIEB.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./PIEB.csv", 1, encoding = 'UTF-8')
 groupS
 
 dose <- groupS$doseSequence
 response <- groupS$responseSequence
 confidence <- .95
-tpCiScale <- 2.4/qnorm(0.975)
+tpCiScale <- 2.4 / qnorm(0.975)
 boot.n <- 2000
 
 doseLength <- length(dose)
@@ -40,11 +40,11 @@ tmp4 <- as.numeric(names(tmp3))
 tmp5 <- seq(min(tmp4), max(tmp4), doseStep)
 tmp6 <- setdiff(tmp5, tmp4)
 tmp7 <- length(tmp6)
-if(tmp7 != 0)
+if (tmp7 != 0)
 {
-  tmp8 <- rep(0, tmp7)
-  names(tmp8) <- tmp6
-  tmp3 <- c(tmp3, tmp8)
+    tmp8 <- rep(0, tmp7)
+    names(tmp8) <- tmp6
+    tmp3 <- c(tmp3, tmp8)
 }
 tmp3 <- tmp3[as.character(tmp5)]
 
@@ -59,7 +59,7 @@ A <- sum(i * n)
 A
 B <- sum(i^2 * n)
 B
-m <- min(tmp4) + doseStep * (A/N + 0.5 * (-1)^tmp2)
+m <- min(tmp4) + doseStep * (A / N + 0.5 * (-1)^tmp2)
 # 修改m的计算公式以适应90%的响应水平
 # m <- min(tmp4) + doseStep * (A/N + 0.5 * (1 - target_level) * (2^(1/N) - 1))
 # m <- m * 1.0963096
@@ -82,19 +82,19 @@ gTableOrigin <- data.frame(Ratio = seq(0.2, 5.0, 0.1),
                                   1.37, 1.4, 1.45, 1.495, 1.53, 1.58, 1.63, 1.7, 1.75, 1.81,
                                   1.895, 1.95, 2.015, 2.1, 2.2, 2.29, 2.39, 2.49, 2.6, 2.75,
                                   2.91, 3.15))
-if(ratio < 0.2)
-  return(warning('The dose step might be set too narrow!'))
-if(ratio > 5)
-  return(warning('The dose step might be set too wide!'))
-if((ratio >= 0.2 & ratio <= 1.6 & !(m %in% tmp4)) | (m %in% tmp4))
+if (ratio < 0.2)
+    return(warning('The dose step might be set too narrow!'))
+if (ratio > 5)
+    return(warning('The dose step might be set too wide!'))
+if ((ratio >= 0.2 & ratio <= 1.6 & !(m %in% tmp4)) | (m %in% tmp4))
 {
-  mode <- loess(formula = G1 ~ Ratio, data = gTableOrigin)
-  G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
+    mode <- loess(formula = G1 ~ Ratio, data = gTableOrigin)
+    G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
 }
-if(ratio > 1.6 & ratio <= 5 & !(m %in% tmp4))
+if (ratio > 1.6 & ratio <= 5 & !(m %in% tmp4))
 {
-  mode <- loess(formula = G2 ~ Ratio, data = gTableOrigin[gTableOrigin$Ratio >= 1.6, ])
-  G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
+    mode <- loess(formula = G2 ~ Ratio, data = gTableOrigin[gTableOrigin$Ratio >= 1.6,])
+    G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
 }
 sm <- G * s / sqrt(N)
 
@@ -103,13 +103,13 @@ lb <- m - qnorm(0.5 + 0.5 * confidence) * sm
 ub <- m + qnorm(0.5 + 0.5 * confidence) * sm
 
 # Summarise the whole result
-ed50_result <- list('Method of Estimation'= 'Dixon-Mood',
-            'Estimate of ED50' = m,
-            'Standard Error of Estimate' = sm,
-            'Value of Parameter G' = G,
-            'Confidence Level' = paste0(100 * confidence, '%'),
-            'Lower Bound' = lb,
-            'Upper Bound' = ub)
+ed50_result <- list('Method of Estimation' = 'Dixon-Mood',
+                    'Estimate of ED50' = m,
+                    'Standard Error of Estimate' = sm,
+                    'Value of Parameter G' = G,
+                    'Confidence Level' = paste0(100 * confidence, '%'),
+                    'Lower Bound' = lb,
+                    'Upper Bound' = ub)
 ed50_result
 
 # 使用estimate函数计算ED50
@@ -130,7 +130,7 @@ g_value <- gTableOrigin[which.min(abs(gTableOrigin$Ratio - ratio)), "G1"]  # 假
 ed90_estimate <- ed50_estimate + g_value * se
 
 # 打印所需的统计量
-ed90_result <- list('Method of Estimation'= 'Dixon-Mood',
+ed90_result <- list('Method of Estimation' = 'Dixon-Mood',
                     'Estimate of ED90' = ed90_estimate,
                     'Standard Error of Estimate' = se,
                     'Value of Parameter G' = g_value,

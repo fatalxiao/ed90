@@ -13,12 +13,12 @@ pieb
 bhamou03ropi <- DRtrace(x = pieb$doseSequence, y = pieb$responseSequence)
 bhamou03ropi
 
-# bhamou03ropi = DRtrace(x=c(rep(25,7),rep(22.5,2),rep(25,2),rep(27.5,6),30,rep(32.5,3),rep(35,2),rep(37.5,4),rep(40,5),rep(37.5,3),rep(40,4),42.5,rep(45,9),47.5),
-#                        y=c(rep(1,8),0,1,0,rep(1,5),rep(0,2),rep(1,2),0,1,0,rep(1,3),0,rep(1,7),0,rep(1,3),rep(0,2),rep(1,8),0,1))
+# bhamou03ropi <- DRtrace(x = c(rep(25, 7), rep(22.5, 2), rep(25, 2), rep(27.5, 6), 30, rep(32.5, 3), rep(35, 2), rep(37.5, 4), rep(40, 5), rep(37.5, 3), rep(40, 4), 42.5, rep(45, 9), 47.5),
+#                         y = c(rep(1, 8), 0, 1, 0, rep(1, 5), rep(0, 2), rep(1, 2), 0, 1, 0, rep(1, 3), 0, rep(1, 7), 0, rep(1, 3), rep(0, 2), rep(1, 8), 0, 1))
 # bhamou03ropi
 
-# bhamou03ropi = DRtrace(x=c(rep(25,7),rep(22.5,1),rep(25,1),rep(27.5,2),rep(30,5),rep(32.5,6),rep(30,1),rep(27.5,1),rep(30,11),rep(27.5,1),rep(30,7),rep(27.5,1),rep(30,1)),
-#                        y=c(rep(1,7),rep(0,2),rep(1,1),rep(0,1),rep(1,4),rep(0,1),rep(1,7),rep(0,1),rep(1,11),rep(0,1),rep(1,7),rep(0,1),rep(1,1)))
+# bhamou03ropi <- DRtrace(x = c(rep(25, 7), rep(22.5, 1), rep(25, 1), rep(27.5, 2), rep(30, 5), rep(32.5, 6), rep(30, 1), rep(27.5, 1), rep(30, 11), rep(27.5, 1), rep(30, 7), rep(27.5, 1), rep(30, 1)),
+#                         y = c(rep(1, 7), rep(0, 2), rep(1, 1), rep(0, 1), rep(1, 4), rep(0, 1), rep(1, 7), rep(0, 1), rep(1, 11), rep(0, 1), rep(1, 7), rep(0, 1), rep(1, 1)))
 # bhamou03ropi
 
 # The experiment's goal is to find the 30th percentile

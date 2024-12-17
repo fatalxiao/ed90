@@ -1,16 +1,16 @@
 # 安装和加载所需的包
 if (!require("ed50")) {
-  install.packages("ed50")
+    install.packages("ed50")
 }
 library(ed50)
 
-groupS <- read.csv("./groupS.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./loading volume data.csv", 1, encoding = 'UTF-8')
 groupS
 
 doseSequence <- groupS$doseSequence
 doseResponse <- groupS$responseSequence
 confidence <- .95
-tpCiScale <- 2.4/qnorm(0.975)
+tpCiScale <- 2.4 / qnorm(0.975)
 boot.n <- 2000
 
 # estimate(doseSequence, doseResponse, method = 'Dixon-Mood')
@@ -41,11 +41,11 @@ tmp4
 tmp5 <- seq(min(tmp4), max(tmp4), 1)
 tmp6 <- setdiff(tmp5, tmp4)
 tmp7 <- length(tmp6)
-if(tmp7 != 0)
+if (tmp7 != 0)
 {
-  tmp8 <- rep(0, tmp7)
-  names(tmp8) <- tmp6
-  tmp3 <- c(tmp3, tmp8)
+    tmp8 <- rep(0, tmp7)
+    names(tmp8) <- tmp6
+    tmp3 <- c(tmp3, tmp8)
 }
 tmp3 <- tmp3[as.character(tmp5)]
 
@@ -55,7 +55,7 @@ N <- sum(n)
 i <- seq_along(n) - 1
 A <- sum(i * n)
 B <- sum(i^2 * n)
-m <- min(tmp4) + doseStep * (A/N + 0.5 * (-1)^tmp2)
+m <- min(tmp4) + doseStep * (A / N + 0.5 * (-1)^tmp2)
 
 # Calculate the standard error of ED50 estimate
 # But parameter G should be first determined
@@ -77,8 +77,8 @@ gTableOrigin <- data.frame(Ratio = seq(0.2, 5.0, 0.1),
 
 # if((ratio >= 0.2 & ratio <= 1.6 & !(m %in% tmp4)) | (m %in% tmp4))
 # {
-  mode <- loess(formula = G1 ~ Ratio, data = gTableOrigin)
-  G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
+mode <- loess(formula = G1 ~ Ratio, data = gTableOrigin)
+G <- as.vector(predict(mode, newdata = data.frame(Ratio = ratio)))
 # }
 # if(ratio > 1.6 & ratio <= 5 & !(m %in% tmp4))
 # {
@@ -92,7 +92,7 @@ lb <- m - qnorm(0.5 + 0.5 * confidence) * sm
 ub <- m + qnorm(0.5 + 0.5 * confidence) * sm
 
 # Summarise the whole result
-ans <- list('Method of Estimation'= 'Dixon-Mood',
+ans <- list('Method of Estimation' = 'Dixon-Mood',
             'Estimate of ED50' = m,
             'Standard Error of Estimate' = sm,
             'Value of Parameter G' = G,
