@@ -1,5 +1,5 @@
 if (!require("Iso")) {
-  install.packages("Iso")
+    install.packages("Iso")
 }
 library(Iso)
 
@@ -9,16 +9,16 @@ ystar <- pava(y)
 ystar
 
 plot(y)
-lines(ystar,type='s')
+lines(ystar, type = 's')
 # Decreasing order:
 z <- NULL
-for(i in 4:8) {
-	z <- c(z,rep(8-i+1,i)+0.05*(0:(i-1)))
+for (i in 4:8) {
+    z <- c(z, rep(8 - i + 1, i) + 0.05 * (0:(i - 1)))
 }
-zstar <- pava(z,decreasing=TRUE)
+zstar <- pava(z, decreasing = TRUE)
 plot(z)
-lines(zstar,type='s')
+lines(zstar, type = 's')
 # Using the stepfunction:
-zstar <- pava(z,decreasing=TRUE,stepfun=TRUE)
+zstar <- pava(z, decreasing = TRUE, stepfun = TRUE)
 plot(z)
-plot(zstar,add=TRUE,verticals=FALSE,pch=20,col.points="red")
+plot(zstar, add = TRUE, verticals = FALSE, pch = 20, col.points = "red")

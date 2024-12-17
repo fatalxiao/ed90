@@ -1,11 +1,11 @@
 # 安装和加载所需的包
 if (!require("upndown")) {
-  install.packages("upndown")
+    install.packages("upndown")
 }
 library(upndown)
 
 # 创建数据框示例
-groupS <- read.csv("./PIEB.csv", 1, encoding='UTF-8')
+groupS <- read.csv("./PIEB.csv", 1, encoding = 'UTF-8')
 groupS
 
 # 准备数据
