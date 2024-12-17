@@ -1,5 +1,5 @@
 if (!require("cir")) {
-  install.packages("cir")
+    install.packages("cir")
 }
 library(cir)
 
@@ -8,7 +8,7 @@ library(cir)
 # dat=doseResponse(y=c(1/7,1/8,1/2,1/4,4/17),wt=c(7,24,20,12,17))
 # CIR, using the default 'quick' function that also provides CIs (default 90\%).
 # The experiment's goal is to find the 30th percentile. We deploy the empirical bias correction.
-quick1=quickIsotone(dat, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.3)
+quick1 <- quickIsotone(dat, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.3)
 quick1
 # Use 'estfun' argument to operate the same function with old PAVA as the estimator
 # Here we neglect the bias correction to sharpen the old:new contrast
@@ -40,4 +40,4 @@ quick1
 # Last but not least, here's the true response function
 # lines(seq(1,5,0.1),pweibull(seq(1,5,0.1),shape=1.1615,scale=8.4839),col=2)
 # legend('topleft',pch=c(NA,'X',NA,NA),lty=c(1,NA,2,1),col=c(2,1,1,1),
-	legend=c('True Curve','Observations','IR','CIR'), bty='n')
+legend <- c('True Curve', 'Observations', 'IR', 'CIR'),bty='n')
