@@ -1,5 +1,5 @@
 if (!require("cir")) {
-    install.packages("cir")
+  install.packages("cir")
 }
 library(cir)
 
@@ -7,9 +7,17 @@ library(cir)
 # (x will be auto-generated as dose levels 1:5)
 # dat <- doseResponse(y = c(1 / 7, 1 / 8, 1 / 2, 1 / 4, 4 / 17), wt = c(7, 24, 20, 12, 17))
 dat <- doseResponse(y = c(1 / 2, 2 / 4, 12 / 15, 19 / 19), wt = c(12, 14, 16, 18))
+dat
+
+# pieb <- read.csv("./loading volume data.csv", 1, encoding = 'UTF-8')
+# pieb
+#
+# dat <- DRtrace(x = pieb$doseSequence, y = pieb$responseSequence)
+# dat
+
 # CIR, using the default 'quick' function that also provides CIs (default 90\%).
 # The experiment's goal is to find the 30th percentile. We deploy the empirical bias correction.
-quick1 <- quickIsotone(dat, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.3)
+quick1 <- quickIsotone(dat, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.9)
 quick1
 # Use 'estfun' argument to operate the same function with old PAVA as the estimator
 # Here we neglect the bias correction to sharpen the old:new contrast
@@ -26,12 +34,12 @@ lines(quick0$y, lty = 2)
 # it only provides the estimates at requested points.  Interpolation should be done between
 # shrinkage points, not the original design points. So we must call the full 'cirPAVA' function:
 
-slow1 <- cirPAVA(dat, full = TRUE, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.3)
+slow1 <- cirPAVA(dat, full = TRUE, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.9)
 # Now, compare these 3 (the first one is wrong, b/c it interpolates from design points):
-midpts <- 1:4 + 0.5
-approx(1:5, quick1$y, xout = midpts)$y
+midpts <- 1:3 + 0.5
+approx(1:4, quick1$y, xout = midpts)$y
 # instead, you can just call 'quickIsotone' and specify 'outx'
-quickIsotone(dat, outx = midpts, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.3)
+quickIsotone(dat, outx = midpts, adaptiveShrink = TRUE, adaptiveCurve = TRUE, target = 0.9)
 approx(slow1$shrinkage$x, slow1$shrinkage$y, xout = midpts)$y # Or use 'cirPAVA'
 
 # Ok... finally plotting the CIR curve
