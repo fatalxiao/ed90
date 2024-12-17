@@ -33,7 +33,7 @@ estimate <- function(doseSequence,
         return(warning('Dose data and response data input are of different length!'))
 
     # Get the method
-    method <- tryCatch(match.arg(method), error = function(e) 'error')
+    method <- tryCatch(match.arg(method), error = function() 'error')
     if (method == 'error')
         return(warning('The parameter method should be one of "Dixon-Mood", "ModTurPoint", "Logistic" and "Isotonic"!'))
 
@@ -175,7 +175,7 @@ estimate <- function(doseSequence,
 
         rhoHat <- tryCatch(uniroot(rhoHatFunc,
                                    interval = c(-1 + 10^(-5), 1 - 10^(-5)),
-                                   tol = 1e-9)$root, error = function(e) 'error')
+                                   tol = 1e-9)$root, error = function() 'error')
         if (rhoHat == 'error') return(warning('Problem occured in solving the equations!\nMaybe the number of turning points is not enough.'))
         rhoHat <- max(abs(rhoHat))
         sigHat2 <- (a - 2 * rhoHat * b + (1 + rhoHat^2) * c) / (nW - 1)
