@@ -1,6 +1,6 @@
 # 安装和加载所需的包
 if (!require("drc")) {
-  install.packages("drc")
+    install.packages("drc")
 }
 library(drc)
 

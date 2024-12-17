@@ -13,7 +13,8 @@ estimate <- function(doseSequence,
                      confidence = .95,
                      method = c('Dixon-Mood', 'Choi', 'ModTurPoint', 'Logistic', 'Isotonic'),
                      tpCiScale = 2.4 / qnorm(0.975),
-                     boot.n = 10000)
+                     boot.n = 10000,
+                     doseStep = 1)
 {
     # First check out the type of data input
     # Whether the dose data or response data is a numeric vector...
@@ -47,7 +48,6 @@ estimate <- function(doseSequence,
     #     return(warning('There is only one dose sample input!'))
     # if (length(doseStep) == 1 & doseStep == 0)
     #   return(warning('The dose step is set to be zero!'))
-    doseStep <- 2
 
     # Estimate ED50 using Dixon-Mood method
     if (method == 'Dixon-Mood')
@@ -295,4 +295,5 @@ estimate(doseSequence = groupS$doseSequence,
          # method = 'Logistic',
          method = 'Isotonic',
          tpCiScale = 2.4 / qnorm(0.975),
-         boot.n = 123)
+         boot.n = 2000,
+         doseStep = 2)
