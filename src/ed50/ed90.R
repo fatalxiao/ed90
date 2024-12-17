@@ -234,11 +234,11 @@ estimate <- function(doseSequence,
         bootRes <- as.vector(bootRes$t)
         sd <- sqrt(var(bootRes))
         lb <- as.vector(quantile(bootRes, probs = (1 - confidence) / 2, na.rm = TRUE))
-        ub <- as.vector(quantile(bootRes, probs = .5 + confidence / 2, na.rm = TRUE))
+        ub <- as.vector(quantile(bootRes, probs = .9 + confidence / 2, na.rm = TRUE))
 
         # Summarise the whole result
         ans <- list('Method of Estimation' = 'Logistic Regression',
-                    'Estimate of ED50' = muHat,
+                    'Estimate of ED90' = muHat,
                     'Standard Error of Estimate' = sd,
                     'Confidence Level' = paste0(100 * confidence, '%'),
                     'Lower Bound' = lb,
@@ -292,6 +292,7 @@ estimate(doseSequence = groupS$doseSequence,
          doseResponse = groupS$responseSequence,
          confidence = .95,
          # method = 'Dixon-Mood',
+         # method = 'Logistic',
          method = 'Isotonic',
          tpCiScale = 2.4 / qnorm(0.975),
-         boot.n = 2000)
+         boot.n = 123)
